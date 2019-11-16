@@ -23,6 +23,9 @@ public class App {
         int portNumber = (port != null) ? Integer.parseInt(port) : 8080;
 
         port(portNumber);
+        staticFiles.location("/public");
+        staticFiles.expireTime(600);
+
         new Router(injector).register();
     }
 }

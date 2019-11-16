@@ -18,10 +18,12 @@ public class Router {
     }
 
     public void register() {
-        before("*", AppFilter.addTrailingSlashes);
+//        before("*", AppFilter.addTrailingSlashes);
 
         // Add your route here
         get("/", this.instance(IndexController.class)::Index);
+        get("/login", this.instance(IndexController.class)::Login);
+        get("/register", this.instance(IndexController.class)::Register);
 
         after("*", AppFilter.addGzipHeader);
     }
