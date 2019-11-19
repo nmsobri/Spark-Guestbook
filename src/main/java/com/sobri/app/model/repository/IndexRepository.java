@@ -1,17 +1,17 @@
 package com.sobri.app.model.repository;
 
 import com.google.inject.Inject;
-import com.sobri.app.model.entity.IndexEntity;
+import com.sobri.app.model.entity.UserEntity;
 
 public class IndexRepository {
-    private IndexEntity indexEntity;
+    private UserEntity userEntity;
 
     @Inject
-    public IndexRepository(IndexEntity indexEntity) {
-        this.indexEntity = indexEntity;
+    public IndexRepository(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 
     public String Index() {
-        return this.indexEntity.Index();
+        return this.userEntity.Index();
     }
 }

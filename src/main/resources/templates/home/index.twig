@@ -1,5 +1,36 @@
 {% extends "./../layout/base.twig"%}
 
+{% block css%}
+    {{parent()}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" />
+    <link rel="stylesheet" href="css/quill.snow.css" />
+{% endblock %}
+
 {% block content %}
-    Index page
+    <form action="/" method="post">
+        <div class="standalone-container">
+            <div id="snow-container"></div>
+        </div>
+
+        <div style="float: right">
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </div>
+    </form>
+
+    <div id="entries">
+        <h4>Entries</h4>
+        <hr>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="js/quill.min.js"></script>
+
+    <script>
+        var quill = new Quill('#snow-container', {
+            placeholder: "What's on your mind...",
+            theme: 'snow'
+        });
+    </script>
 {% endblock %}

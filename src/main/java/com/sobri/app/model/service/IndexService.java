@@ -1,7 +1,10 @@
 package com.sobri.app.model.service;
 
-import com.google.inject.Inject;
+import spark.Request;
 import com.sobri.lib.AppService;
+import com.google.inject.Inject;
+import com.sobri.app.model.bean.LoginBean;
+import com.sobri.app.model.bean.RegisterBean;
 import com.sobri.app.model.repository.IndexRepository;
 
 public class IndexService extends AppService {
@@ -14,5 +17,25 @@ public class IndexService extends AppService {
 
     public String Index() {
         return this.indexRepository.Index();
+    }
+
+    public boolean LoginPost(Request req) {
+        LoginBean userLoginBean = new LoginBean(
+                req.queryParams("email"),
+                req.queryParams("password")
+        );
+
+        return this.validate(userLoginBean);
+    }
+
+    public boolean RegisterPost(Request req) {
+        RegisterBean userRegisterBean = new RegisterBean(
+                req.queryParams("email"),
+                req.queryParams("password"),
+                req.queryParams("anything"),
+                req.queryParams("anything")
+        );
+
+        return this.validate(userRegisterBean);
     }
 }

@@ -18,18 +18,54 @@ public class IndexController extends AppController {
         this.indexService = indexService;
     }
 
-    public Object Index(Request req, Response res) throws Exception {
-        this.set("message", this.indexService.Index());
+    public Object IndexGet(Request req, Response res) throws Exception {
         return this.render("home/index.twig");
     }
 
-    public Object Login(Request req, Response res) throws Exception {
-        this.set("message", this.indexService.Index());
+    public Object IndexPost(Request req, Response res) throws Exception {
+        return this.render("home/index.twig");
+    }
+
+    public Object LoginGet(Request req, Response res) throws Exception {
+        this.set("error", req.session().attribute("flash"));
+        req.session().removeAttribute("flash");
         return this.render("home/login.twig");
     }
 
-    public Object Register(Request req, Response res) throws Exception {
-        this.set("message", this.indexService.Index());
+    public Object LoginPost(Request req, Response res) throws Exception {
+        if (!this.indexService.LoginPost(req)) {
+            req.session().attribute("flash", this.indexService.getMessage());
+            res.redirect("/login");
+        } else {
+            res.redirect("/");
+            req.session().attribute("flash", "Successfully login!");
+        }
+
+        return null;
+    }
+
+    public Object RegisterGet(Request req, Response res) throws Exception {
+        this.set("error", req.session().attribute("flash"));
+        req.session().removeAttribute("flash");
         return this.render("home/register.twig");
+    }
+
+    public Object RegisterPost(Request req, Response res) throws Exception {
+        if (!this.indexService.RegisterPost(req)) {
+            req.session().attribute("flash", this.indexService.getMessage());
+        } else {
+            req.session().attribute("flash", "Successfully register!");
+        }
+
+        res.redirect("/register");
+        return null;
+    }
+
+    public Object ForgotGet(Request req, Response res) throws Exception {
+        return this.render("home/forgot.twig");
+    }
+
+    public Object ForgotPost(Request req, Response res) throws Exception {
+        return this.render("home/forgot.twig");
     }
 }

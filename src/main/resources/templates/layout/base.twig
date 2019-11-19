@@ -9,14 +9,16 @@
 
         <title>Guestbook 1.0</title>
 
-        <!-- Bootstrap core CSS -->
-        <link href="/css/bootstrap.css" rel="stylesheet">
+        {% block css %}
+            <!-- Bootstrap core CSS -->
+            <link href="/css/bootstrap.css" rel="stylesheet">
 
-        <!-- Custom styles for this template -->
-        <link href="css/sidebar.css" rel="stylesheet">
+            <!-- Custom styles for this template -->
+            <link href="css/sidebar.css" rel="stylesheet">
 
-        <!-- Custom styles for this template -->
-        <link href="css/main.css" rel="stylesheet">
+            <!-- Custom styles for this template -->
+            <link href="css/main.css" rel="stylesheet">
+        {% endblock %}
     </head>
 
     <body>
@@ -68,7 +70,7 @@
 
                 <div class="container-fluid">
                     {% block content %}
-                    Main content
+                        Main content
                     {% endblock %}
                 </div>
             </div>
@@ -77,17 +79,19 @@
         </div>
         <!-- /#wrapper -->
 
-        <!-- Bootstrap core JavaScript -->
-        <script src="/js/jquery.js"></script>
-        <script src="/js/bootstrap.bundle.js"></script>
+        {% block js%}
+            <!-- Bootstrap core JavaScript -->
+            <script src="/js/jquery.js"></script>
+            <script src="/js/bootstrap.bundle.js"></script>
 
-        <!-- Menu Toggle Script -->
-        <script>
-            $("#menu-toggle").click(function (e) {
-                e.preventDefault();
-                $("#wrapper").toggleClass("toggled");
-            });
-        </script>
+            <!-- Menu Toggle Script -->
+            <script>
+                $("#menu-toggle").click(function (e) {
+                    e.preventDefault();
+                    $("#wrapper").toggleClass("toggled");
+                });
+            </script>
+        {% endblock %}
 
     </body>
 

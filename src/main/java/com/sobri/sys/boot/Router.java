@@ -18,12 +18,20 @@ public class Router {
     }
 
     public void register() {
-//        before("*", AppFilter.addTrailingSlashes);
+        // before("*", AppFilter.addTrailingSlashes);
 
         // Add your route here
-        get("/", this.instance(IndexController.class)::Index);
-        get("/login", this.instance(IndexController.class)::Login);
-        get("/register", this.instance(IndexController.class)::Register);
+        get("/", this.instance(IndexController.class)::IndexGet);
+        post("/", this.instance(IndexController.class)::IndexPost);
+
+        get("/login", this.instance(IndexController.class)::LoginGet);
+        post("/login", this.instance(IndexController.class)::LoginPost);
+
+        get("/register", this.instance(IndexController.class)::RegisterGet);
+        post("/register", this.instance(IndexController.class)::RegisterPost);
+
+        get("/forgot", this.instance(IndexController.class)::ForgotGet);
+        post("/forgot", this.instance(IndexController.class)::ForgotPost);
 
         after("*", AppFilter.addGzipHeader);
     }

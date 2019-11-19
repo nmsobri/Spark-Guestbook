@@ -24,7 +24,7 @@ public class App {
 
         port(portNumber);
         staticFiles.location("/public");
-        staticFiles.expireTime(600);
+//        staticFiles.expireTime(600);
 
         new Router(injector).register();
     }
