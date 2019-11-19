@@ -21,6 +21,9 @@
     <div id="entries">
         <h4>Entries</h4>
         <hr>
+        {% for user in users%}
+            {{ user }}
+        {% endfor %}
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>

@@ -3,6 +3,8 @@ package com.sobri.app.model.repository;
 import com.google.inject.Inject;
 import com.sobri.app.model.entity.UserEntity;
 
+import java.util.List;
+
 public class IndexRepository {
     private UserEntity userEntity;
 
@@ -11,7 +13,7 @@ public class IndexRepository {
         this.userEntity = userEntity;
     }
 
-    public String Index() {
-        return this.userEntity.Index();
+    public List<String> Index() {
+        return this.userEntity.Users();
     }
 }

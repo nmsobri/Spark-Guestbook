@@ -7,6 +7,8 @@ import com.sobri.app.model.bean.LoginBean;
 import com.sobri.app.model.bean.RegisterBean;
 import com.sobri.app.model.repository.IndexRepository;
 
+import java.util.List;
+
 public class IndexService extends AppService {
     private IndexRepository indexRepository;
 
@@ -15,7 +17,7 @@ public class IndexService extends AppService {
         this.indexRepository = indexRepository;
     }
 
-    public String Index() {
+    public List<String> Index() {
         return this.indexRepository.Index();
     }
 

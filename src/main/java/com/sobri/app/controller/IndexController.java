@@ -8,6 +8,7 @@ import com.sobri.lib.AppController;
 import com.sobri.app.model.service.IndexService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class IndexController extends AppController {
@@ -19,6 +20,9 @@ public class IndexController extends AppController {
     }
 
     public Object IndexGet(Request req, Response res) throws Exception {
+        List<String> users = this.indexService.Index();
+        System.out.println(users);
+        this.set("users", users);
         return this.render("home/index.twig");
     }
 
