@@ -1,8 +1,8 @@
 package com.sobri.app.model.entity;
 
-import com.mysql.cj.protocol.Resultset;
 import com.sobri.lib.AppEntity;
-import com.sobri.sys.boot.App;
+import com.sobri.app.model.bean.RegisterBean;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -28,9 +28,23 @@ public class UserEntity extends AppEntity {
         return users;
     }
 
-    public void UserRegister() throws Exception {
-        String query = "INSERT INTO users (email, password, phone) VALUES ('mail.com', 'password', '123456789')";
+    public boolean UserRegister(RegisterBean userRegisterBean) throws Exception {
+        String query = String.format(
+                "INSERT INTO users (email, password, phone) VALUES ('%s', '%s', '%s')",
+                userRegisterBean.email,
+                BCrypt.hashpw(userRegisterBean.password, BCrypt.gensalt()),
+                userRegisterBean.phoneNumber
+        );
+
         Statement stmt = AppEntity.connection.createStatement();
+        return !stmt.execute(query);
+    }
+
+    public boolean UserIsExist(String email) throws Exception {
+        String query = String.format("SELECT * FROM users WHERE email ='%s'", email);
+        Statement stmt = AppEntity.connection.createStatement();
+
         ResultSet rset = stmt.executeQuery(query);
+        return rset.next();
     }
 }

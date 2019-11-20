@@ -1,6 +1,7 @@
 package com.sobri.app.model.repository;
 
 import com.google.inject.Inject;
+import com.sobri.app.model.bean.RegisterBean;
 import com.sobri.app.model.entity.UserEntity;
 
 import java.util.List;
@@ -17,7 +18,11 @@ public class IndexRepository {
         return this.userEntity.Users();
     }
 
-    public void UserRegister() throws Exception {
-        this.userEntity.UserRegister();
+    public boolean UserRegister(RegisterBean userRegisterBean) throws Exception {
+        return this.userEntity.UserRegister(userRegisterBean);
+    }
+
+    public boolean UserIsExist(String email) throws Exception {
+        return this.userEntity.UserIsExist(email);
     }
 }

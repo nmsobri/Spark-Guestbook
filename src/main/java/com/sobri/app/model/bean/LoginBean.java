@@ -5,10 +5,10 @@ import javax.validation.constraints.*;
 public class LoginBean {
 
     @NotBlank(message = "Please enter email")
-    private String email;
+    public String email;
 
     @NotBlank(message = "Please enter password")
-    private String password;
+    public String password;
 
     public LoginBean(String email, String password) {
         this.email = email;

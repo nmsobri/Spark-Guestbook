@@ -20,6 +20,7 @@ dependencies {
     implementation 'javax.el:javax.el-api:3.0.0'
     implementation 'org.glassfish.web:javax.el:2.2.6'
     implementation 'mysql:mysql-connector-java:8.0.18'
+    implementation 'org.mindrot:jbcrypt:0.4'
     testImplementation 'junit:junit:4.12'
 }
 

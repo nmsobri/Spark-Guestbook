@@ -54,7 +54,13 @@ public class IndexService extends AppService {
         }
 
         try {
-            this.indexRepository.UserRegister();
+            if (this.indexRepository.UserIsExist(userRegisterBean.email)) {
+                return new Pair<>(false, "User already exist");
+            }
+
+            if (!this.indexRepository.UserRegister(userRegisterBean)) {
+                return new Pair<>(false, "Something went wrong when inserting data to database");
+            }
         } catch (Exception e) {
             return new Pair<>(false, e.getMessage());
         }
