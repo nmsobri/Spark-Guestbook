@@ -1,5 +1,6 @@
 package com.sobri.app.model.service;
 
+import com.sobri.lib.Pair;
 import spark.Request;
 import com.sobri.lib.AppService;
 import com.google.inject.Inject;
@@ -8,6 +9,7 @@ import com.sobri.app.model.bean.RegisterBean;
 import com.sobri.app.model.repository.IndexRepository;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class IndexService extends AppService {
     private IndexRepository indexRepository;
@@ -17,11 +19,18 @@ public class IndexService extends AppService {
         this.indexRepository = indexRepository;
     }
 
-    public List<String> Index() {
-        return this.indexRepository.Index();
+    public List<String> Users() {
+        List<String> users = new ArrayList<>();
+        try {
+            users = this.indexRepository.Users();
+        } catch (Exception e) {
+            return users;
+        }
+
+        return users;
     }
 
-    public boolean LoginPost(Request req) {
+    public Pair<Boolean, String> LoginPost(Request req) {
         LoginBean userLoginBean = new LoginBean(
                 req.queryParams("email"),
                 req.queryParams("password")
@@ -30,14 +39,27 @@ public class IndexService extends AppService {
         return this.validate(userLoginBean);
     }
 
-    public boolean RegisterPost(Request req) {
+    public Pair<Boolean, String> RegisterPost(Request req) {
         RegisterBean userRegisterBean = new RegisterBean(
                 req.queryParams("email"),
                 req.queryParams("password"),
-                req.queryParams("anything"),
-                req.queryParams("anything")
+                req.queryParams("confirm_password"),
+                req.queryParams("phone_number")
         );
 
-        return this.validate(userRegisterBean);
+        Pair<Boolean, String> result = this.validate(userRegisterBean);
+
+        if (!result.left()) {
+            return result;
+        }
+
+        try {
+            this.indexRepository.UserRegister();
+        } catch (Exception e) {
+            return new Pair<>(false, e.getMessage());
+        }
+
+        return new Pair<>(true, "Successfully registered");
+
     }
 }

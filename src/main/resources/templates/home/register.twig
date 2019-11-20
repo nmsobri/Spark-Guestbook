@@ -5,9 +5,15 @@
         <form action="/register" method="post">
             <h2 class="text-center">Register</h2>
 
-            {% if error %}
+            {% if flash_error %}
                 <div class="alert alert-danger" role="alert">
-                    {{error}}
+                    {{ flash_error }}
+                </div>
+            {% endif %}
+
+            {% if flash_success %}
+                <div class="alert alert-success" role="alert">
+                    {{ flash_success }}
                 </div>
             {% endif %}
 

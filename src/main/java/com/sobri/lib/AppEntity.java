@@ -11,7 +11,6 @@ public class AppEntity {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost/guestbook";
             AppEntity.connection = DriverManager.getConnection(url, "root", "root");
-            System.out.println("Connected");
         } catch (Exception e) {
             e.printStackTrace();
         }

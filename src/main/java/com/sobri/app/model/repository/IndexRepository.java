@@ -13,7 +13,11 @@ public class IndexRepository {
         this.userEntity = userEntity;
     }
 
-    public List<String> Index() {
+    public List<String> Users() throws Exception {
         return this.userEntity.Users();
+    }
+
+    public void UserRegister() throws Exception {
+        this.userEntity.UserRegister();
     }
 }
