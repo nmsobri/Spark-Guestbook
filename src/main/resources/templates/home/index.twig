@@ -8,6 +8,18 @@
 {% endblock %}
 
 {% block content %}
+    {% if flash_error %}
+        <div class="alert alert-danger" role="alert">
+            {{ flash_error }}
+        </div>
+    {% endif %}
+
+    {% if flash_success %}
+        <div class="alert alert-success" role="alert">
+            {{ flash_success }}
+        </div>
+    {% endif %}
+
     <form action="/" method="post">
         <div class="standalone-container">
             <div id="snow-container"></div>

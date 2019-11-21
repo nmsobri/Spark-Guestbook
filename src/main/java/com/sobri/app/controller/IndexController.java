@@ -18,6 +18,12 @@ public class IndexController extends AppController {
     }
 
     public Object IndexGet(Request req, Response res) throws Exception {
+        this.set("flash_error", req.session().attribute("flash_error"));
+        this.set("flash_success", req.session().attribute("flash_success"));
+
+        req.session().removeAttribute("flash_error");
+        req.session().removeAttribute("flash_success");
+
         List<String> users = this.indexService.Users();
         this.set("users", users);
         return this.render("home/index.twig");

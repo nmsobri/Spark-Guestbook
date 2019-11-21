@@ -5,6 +5,7 @@ import com.sobri.app.model.bean.RegisterBean;
 import com.sobri.app.model.entity.UserEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public class IndexRepository {
     private UserEntity userEntity;
@@ -16,6 +17,10 @@ public class IndexRepository {
 
     public List<String> Users() throws Exception {
         return this.userEntity.Users();
+    }
+
+    public Map<String, String> User(String email) throws Exception {
+        return this.userEntity.User(email);
     }
 
     public boolean UserRegister(RegisterBean userRegisterBean) throws Exception {

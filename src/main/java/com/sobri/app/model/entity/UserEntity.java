@@ -7,7 +7,9 @@ import org.mindrot.jbcrypt.BCrypt;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserEntity extends AppEntity {
     public String Index() {
@@ -26,6 +28,23 @@ public class UserEntity extends AppEntity {
         }
 
         return users;
+    }
+
+    public Map<String, String> User(String email) throws Exception {
+        Map<String, String> user = new HashMap<>();
+
+        String query = String.format("SELECT * FROM users WHERE email='%s'", email);
+        Statement stmt = AppEntity.connection.createStatement();
+        ResultSet rset = stmt.executeQuery(query);
+
+        while (rset.next()) {
+            user.put("id", rset.getString("id"));
+            user.put("email", rset.getString("email"));
+            user.put("password", rset.getString("password"));
+            user.put("phone", rset.getString("phone"));
+        }
+
+        return user;
     }
 
     public boolean UserRegister(RegisterBean userRegisterBean) throws Exception {
