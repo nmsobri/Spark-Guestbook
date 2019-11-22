@@ -114,8 +114,8 @@ public class IndexService extends AppService {
 
         try {
             int commentCount = this.indexRepository.commentCount();
-            Paginator paginator = new Paginator("/", commentCount, 2, page);
-            comments = this.indexRepository.Comments(paginator.page(), 5);
+            Paginator paginator = new Paginator("/", commentCount, 5, page);
+            comments = this.indexRepository.Comments(paginator.page(), paginator.limit());
             return new Pair<>(true, new Pair<>(paginator, comments));
         } catch (Exception e) {
             return new Pair<>(false, new Pair<>(null, comments));

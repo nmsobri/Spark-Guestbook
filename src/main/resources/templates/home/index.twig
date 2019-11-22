@@ -36,10 +36,6 @@
         <h4>Entries</h4>
         <hr>
 
-        <ul class="pagination">
-            {{ paginator }}
-        </ul>
-
         {% for _comment in comments %}
             <div class="comment">
                 <b>{{ _comment.email }}</b>
