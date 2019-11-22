@@ -23,6 +23,8 @@ public class AppController {
     }
 
     public Object render(Request req, String tplName) {
+        this.flashMessage(req);
+
         if (req.session().attribute("user") != null) {
             this.set("logged_in", true);
         } else {

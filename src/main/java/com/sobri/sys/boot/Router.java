@@ -26,6 +26,7 @@ public class Router {
                 if (req.session().attribute("user") == null) {
                     req.session().attribute("flash_error", "Please login first!");
                     res.redirect("/");
+                    halt();
                 }
             }
         });

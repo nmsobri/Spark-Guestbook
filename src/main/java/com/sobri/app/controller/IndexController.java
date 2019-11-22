@@ -21,7 +21,6 @@ public class IndexController extends AppController {
     public Object IndexGet(Request req, Response res) throws Exception {
         Pair<Boolean, List<Map<String, String>>> result = this.indexService.Comments();
 
-        this.flashMessage(req);
         this.set("comments", result.right());
         return this.render(req, "home/index.twig");
     }
@@ -41,7 +40,6 @@ public class IndexController extends AppController {
     }
 
     public Object LoginGet(Request req, Response res) throws Exception {
-        this.flashMessage(req);
         return this.render(req, "home/login.twig");
     }
 
@@ -67,7 +65,6 @@ public class IndexController extends AppController {
     }
 
     public Object RegisterGet(Request req, Response res) throws Exception {
-        this.flashMessage(req);
         return this.render(req, "home/register.twig");
     }
 
