@@ -46,10 +46,9 @@ public class IndexService extends AppService {
 
         try {
             Map<String, String> user = this.indexRepository.User(req.queryParams("email"));
-            System.out.println(user.isEmpty());
 
             if (!user.isEmpty() && BCrypt.checkpw(req.queryParams("password"), user.get("password"))) {
-                req.session().attribute("email", req.queryParams("email"));
+                req.session().attribute("user", user);
                 return new Pair<>(true, "Successfully login");
             } else {
                 return new Pair<>(false, "Invalid username or password");
@@ -86,6 +85,32 @@ public class IndexService extends AppService {
         }
 
         return new Pair<>(true, "Successfully registered");
+    }
 
+    public Pair<Boolean, String> saveComment(Request req) {
+        try {
+            Map<String, String> user = req.session().attribute("user");
+
+            int user_id = Integer.parseInt(user.get("id"));
+            String content = req.queryParams("content");
+
+            this.indexRepository.saveComment(user_id, content);
+        } catch (Exception e) {
+            return new Pair<>(false, e.getMessage());
+        }
+
+        return new Pair<>(true, "Successfully add comment");
+    }
+
+    public Pair<Boolean, List<Map<String, String>>> Comments() {
+        List<Map<String, String>> comments = new ArrayList<Map<String, String>>();
+
+        try {
+            comments = this.indexRepository.Comments(0, 10);
+        } catch (Exception e) {
+            return new Pair<>(false, comments);
+        }
+
+        return new Pair<>(true, comments);
     }
 }

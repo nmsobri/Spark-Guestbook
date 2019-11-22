@@ -4,6 +4,7 @@ import com.sobri.lib.AppEntity;
 import com.sobri.app.model.bean.RegisterBean;
 import org.mindrot.jbcrypt.BCrypt;
 
+import javax.swing.plaf.nimbus.State;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -65,5 +66,29 @@ public class UserEntity extends AppEntity {
 
         ResultSet rset = stmt.executeQuery(query);
         return rset.next();
+    }
+
+    public boolean saveComment(int user_id, String content) throws Exception {
+        String query = String.format("INSERT INTO comments (email_id, comment) VALUES('%d', '%s')", user_id, content);
+
+        Statement stmt = AppEntity.connection.createStatement();
+        return !stmt.execute(query);
+    }
+
+    public List<Map<String, String>> Comments(int start, int limit) throws Exception {
+        List<Map<String, String>> comments = new ArrayList<>();
+        String query = String.format("SELECT c.*, u.email FROM comments c INNER JOIN users u ON c.email_id = u.id LIMIT %d, %d", start, limit);
+
+        Statement stmt = AppEntity.connection.createStatement();
+        ResultSet rset = stmt.executeQuery(query);
+
+        while (rset.next()) {
+            Map<String, String> comment = new HashMap<>();
+            comment.put("comment", rset.getString("comment"));
+            comment.put("email", rset.getString("email"));
+            comments.add(comment);
+        }
+
+        return comments;
     }
 }

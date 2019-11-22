@@ -20,12 +20,24 @@ public class Router {
     public void register() {
         // before("*", AppFilter.addTrailingSlashes);
 
+        before("/", (req, res) -> {
+            if (req.requestMethod().equals("POST")) {
+
+                if (req.session().attribute("user") == null) {
+                    req.session().attribute("flash_error", "Please login first!");
+                    res.redirect("/");
+                }
+            }
+        });
+
         // Add your route here
         get("/", this.instance(IndexController.class)::IndexGet);
         post("/", this.instance(IndexController.class)::IndexPost);
 
         get("/login", this.instance(IndexController.class)::LoginGet);
         post("/login", this.instance(IndexController.class)::LoginPost);
+
+        get("/logout", this.instance(IndexController.class)::LogoutGet);
 
         get("/register", this.instance(IndexController.class)::RegisterGet);
         post("/register", this.instance(IndexController.class)::RegisterPost);

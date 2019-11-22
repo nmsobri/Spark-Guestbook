@@ -11,6 +11,13 @@
                 </div>
             {% endif %}
 
+            {% if flash_success %}
+                <div class="alert alert-success" role="alert">
+                    {{ flash_success }}
+                </div>
+            {% endif %}
+
+
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Email" name="email">
             </div>

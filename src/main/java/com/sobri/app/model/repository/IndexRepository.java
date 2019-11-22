@@ -30,4 +30,12 @@ public class IndexRepository {
     public boolean UserIsExist(String email) throws Exception {
         return this.userEntity.UserIsExist(email);
     }
+
+    public boolean saveComment(int user_id, String content) throws Exception {
+        return this.userEntity.saveComment(user_id, content);
+    }
+
+    public List<Map<String, String>> Comments(int start, int limit) throws Exception {
+        return this.userEntity.Comments(start, limit);
+    }
 }

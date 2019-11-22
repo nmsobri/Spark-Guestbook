@@ -1,6 +1,6 @@
 {% extends "./../layout/base.twig"%}
 
-{% block css%}
+{% block css %}
     {{parent()}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" />
@@ -20,7 +20,7 @@
         </div>
     {% endif %}
 
-    <form action="/" method="post">
+    <form action="/" method="post" id="form-comment">
         <div class="standalone-container">
             <div id="snow-container"></div>
         </div>
@@ -33,19 +33,56 @@
     <div id="entries">
         <h4>Entries</h4>
         <hr>
-        {% for user in users%}
-            {{ user }}
+
+        {% for _comment in comments %}
+            <div class="comment">
+                <b>{{ _comment.email }}</b>
+                {{ _comment.comment }}
+            </div>
         {% endfor %}
+
     </div>
+
+    <nav aria-label="...">
+        <ul class="pagination">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Previous</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item active">
+                <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
+
+{% endblock %}
+
+{% block js %}
+    {{parent()}}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
     <script src="js/quill.min.js"></script>
 
     <script>
-        var quill = new Quill('#snow-container', {
-            placeholder: "What's on your mind...",
-            theme: 'snow'
+        $(function(){
+            var quill = new Quill('#snow-container', {
+                placeholder: "What's on your mind...",
+                theme: 'snow'
+            });
+
+
+            $("#form-comment").on("submit",function(){
+                var editor = document.querySelector('#snow-container');
+                var content = editor.children[0].innerHTML;
+                $("#content").val(content);
+            });
         });
+
     </script>
+
 {% endblock %}
