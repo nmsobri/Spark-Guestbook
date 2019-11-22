@@ -32,9 +32,6 @@ public class Router {
         });
 
         // Add your route here
-        get("/", this.instance(IndexController.class)::IndexGet);
-        post("/", this.instance(IndexController.class)::IndexPost);
-
         get("/login", this.instance(IndexController.class)::LoginGet);
         post("/login", this.instance(IndexController.class)::LoginPost);
 
@@ -45,6 +42,10 @@ public class Router {
 
         get("/forgot", this.instance(IndexController.class)::ForgotGet);
         post("/forgot", this.instance(IndexController.class)::ForgotPost);
+
+        // Need to add here due to splat operator, or else it gona match all route that start with '/'
+        get("/*", this.instance(IndexController.class)::IndexGet);
+        post("/", this.instance(IndexController.class)::IndexPost);
 
         after("*", AppFilter.addGzipHeader);
     }

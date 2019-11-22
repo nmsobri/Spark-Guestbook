@@ -1,5 +1,6 @@
 package com.sobri.app.model.service;
 
+import com.sobri.lib.Paginator;
 import com.sobri.lib.Pair;
 import org.mindrot.jbcrypt.BCrypt;
 import spark.Request;
@@ -102,15 +103,22 @@ public class IndexService extends AppService {
         return new Pair<>(true, "Successfully add comment");
     }
 
-    public Pair<Boolean, List<Map<String, String>>> Comments() {
+    public Pair<Boolean, Pair<Paginator, List<Map<String, String>>>> Comments(Request req) {
+        int page = 1;
+
+        if (req.splat().length > 0) {
+            page = Integer.parseInt(req.splat()[0]);
+        }
+
         List<Map<String, String>> comments = new ArrayList<Map<String, String>>();
 
         try {
-            comments = this.indexRepository.Comments(0, 10);
+            int commentCount = this.indexRepository.commentCount();
+            Paginator paginator = new Paginator("/", commentCount, 2, page);
+            comments = this.indexRepository.Comments(paginator.page(), 5);
+            return new Pair<>(true, new Pair<>(paginator, comments));
         } catch (Exception e) {
-            return new Pair<>(false, comments);
+            return new Pair<>(false, new Pair<>(null, comments));
         }
-
-        return new Pair<>(true, comments);
     }
 }

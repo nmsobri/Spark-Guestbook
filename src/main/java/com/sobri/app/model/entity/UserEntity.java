@@ -77,7 +77,11 @@ public class UserEntity extends AppEntity {
 
     public List<Map<String, String>> Comments(int start, int limit) throws Exception {
         List<Map<String, String>> comments = new ArrayList<>();
-        String query = String.format("SELECT c.*, u.email FROM comments c INNER JOIN users u ON c.email_id = u.id LIMIT %d, %d", start, limit);
+
+        String query = String.format(
+                "SELECT c.*, u.email FROM comments c INNER JOIN users u ON c.email_id = u.id ORDER by c.id ASC LIMIT %d, %d ",
+                start, limit
+        );
 
         Statement stmt = AppEntity.connection.createStatement();
         ResultSet rset = stmt.executeQuery(query);
@@ -90,5 +94,19 @@ public class UserEntity extends AppEntity {
         }
 
         return comments;
+    }
+
+
+    public int commentCount() throws Exception {
+        String query = "SELECT COUNT(*) total FROM comments";
+        Statement stmt = AppEntity.connection.createStatement();
+        ResultSet rset = stmt.executeQuery(query);
+
+        int total = 0;
+        while (rset.next()) {
+            total = Integer.parseInt(rset.getString("total"));
+        }
+
+        return total;
     }
 }

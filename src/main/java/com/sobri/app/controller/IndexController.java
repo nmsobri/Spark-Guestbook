@@ -1,5 +1,6 @@
 package com.sobri.app.controller;
 
+import com.sobri.lib.Paginator;
 import spark.Request;
 import spark.Response;
 import com.sobri.lib.Pair;
@@ -19,9 +20,13 @@ public class IndexController extends AppController {
     }
 
     public Object IndexGet(Request req, Response res) throws Exception {
-        Pair<Boolean, List<Map<String, String>>> result = this.indexService.Comments();
+        Pair<Boolean, Pair<Paginator, List<Map<String, String>>>> result = this.indexService.Comments(req);
 
-        this.set("comments", result.right());
+        if (result.left()) {
+            this.set("paginator", result.right().left().paginator());
+            this.set("comments", result.right().right());
+        }
+
         return this.render(req, "home/index.twig");
     }
 

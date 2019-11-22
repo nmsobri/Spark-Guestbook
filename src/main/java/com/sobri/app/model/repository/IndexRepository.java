@@ -38,4 +38,8 @@ public class IndexRepository {
     public List<Map<String, String>> Comments(int start, int limit) throws Exception {
         return this.userEntity.Comments(start, limit);
     }
+
+    public int commentCount() throws Exception {
+        return this.userEntity.commentCount();
+    }
 }
