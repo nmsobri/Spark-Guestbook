@@ -109,4 +109,11 @@ public class UserEntity extends AppEntity {
 
         return total;
     }
+
+    public boolean changePassword(int userID, String password) throws Exception {
+        String query = String.format("UPDATE users SET password='%s' WHERE id='%d'", BCrypt.hashpw(password, BCrypt.gensalt()), userID);
+
+        Statement stmt = AppEntity.connection.createStatement();
+        return !stmt.execute(query);
+    }
 }

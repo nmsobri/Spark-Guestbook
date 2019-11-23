@@ -4,6 +4,7 @@ import javax.validation.constraints.*;
 
 public class RegisterBean {
     @NotBlank(message = "Please enter email")
+    @Email(message = "Please enter valid email")
     public String email;
 
     @NotBlank(message = "Please enter password")

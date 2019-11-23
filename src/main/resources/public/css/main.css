@@ -2,6 +2,10 @@
     padding-top: 15px;
 }
 
+.profile-form {
+    width: 440px;
+}
+
 .login-form {
     width: 440px;
     margin: 50px auto;
