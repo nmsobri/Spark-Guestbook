@@ -21,6 +21,7 @@ dependencies {
     implementation 'org.glassfish.web:javax.el:2.2.6'
     implementation 'mysql:mysql-connector-java:8.0.18'
     implementation 'org.mindrot:jbcrypt:0.4'
+    implementation 'commons-beanutils:commons-beanutils:1.9.4'
     testImplementation 'junit:junit:4.12'
 }
 

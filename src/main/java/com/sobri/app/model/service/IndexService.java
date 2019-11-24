@@ -81,8 +81,8 @@ public class IndexService extends AppService {
         }
 
         try {
-            if (this.indexRepository.UserIsExist(userRegisterBean.email)) {
-                return new Pair<>(false, "User already exist");
+            if (this.indexRepository.UserIsExist(userRegisterBean.getEmail())) {
+                return new Pair<>(false, "Email already being used");
             }
 
             if (!this.indexRepository.UserRegister(userRegisterBean)) {
@@ -139,7 +139,7 @@ public class IndexService extends AppService {
         }
 
         try {
-            Map<String, String> user = this.indexRepository.User(resetBean.email);
+            Map<String, String> user = this.indexRepository.User(resetBean.getEmail());
             int userID = Integer.parseInt(user.get("id"));
             String password = this.generatePassword();
 

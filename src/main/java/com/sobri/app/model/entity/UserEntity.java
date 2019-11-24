@@ -4,7 +4,6 @@ import com.sobri.lib.AppEntity;
 import com.sobri.app.model.bean.RegisterBean;
 import org.mindrot.jbcrypt.BCrypt;
 
-import javax.swing.plaf.nimbus.State;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -51,9 +50,9 @@ public class UserEntity extends AppEntity {
     public boolean UserRegister(RegisterBean userRegisterBean) throws Exception {
         String query = String.format(
                 "INSERT INTO users (email, password, phone) VALUES ('%s', '%s', '%s')",
-                userRegisterBean.email,
-                BCrypt.hashpw(userRegisterBean.password, BCrypt.gensalt()),
-                userRegisterBean.phoneNumber
+                userRegisterBean.getEmail(),
+                BCrypt.hashpw(userRegisterBean.getPassword(), BCrypt.gensalt()),
+                userRegisterBean.getPhoneNumber()
         );
 
         Statement stmt = AppEntity.connection.createStatement();

@@ -7,9 +7,13 @@ public class ResetBean {
 
     @NotBlank(message = "Please enter email")
     @Email(message = "Please enter valid email")
-    public String email;
+    private String email;
 
     public ResetBean(String email) {
         this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }
