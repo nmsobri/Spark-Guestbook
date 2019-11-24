@@ -1,7 +1,11 @@
 package com.sobri.app.model.service;
 
+import com.sobri.app.model.bean.PasswordBean;
+import com.sobri.app.model.bean.ResetBean;
+import com.sobri.app.model.repository.UserRepository;
 import com.sobri.lib.Paginator;
 import com.sobri.lib.Pair;
+import org.eclipse.jetty.server.Authentication;
 import org.mindrot.jbcrypt.BCrypt;
 import spark.Request;
 import com.sobri.lib.AppService;
@@ -13,13 +17,16 @@ import com.sobri.app.model.repository.IndexRepository;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Random;
 
 public class IndexService extends AppService {
     private IndexRepository indexRepository;
+    private UserRepository userRepository;
 
     @Inject
-    public IndexService(IndexRepository indexRepository) {
+    public IndexService(IndexRepository indexRepository, UserRepository userRepository) {
         this.indexRepository = indexRepository;
+        this.userRepository = userRepository;
     }
 
     public List<String> Users() {
@@ -120,5 +127,45 @@ public class IndexService extends AppService {
         } catch (Exception e) {
             return new Pair<>(false, new Pair<>(null, comments));
         }
+    }
+
+    public Pair<Boolean, String> forgotPost(Request req) {
+        ResetBean resetBean = new ResetBean(req.queryParams("email"));
+
+        Pair<Boolean, String> result = this.validate(resetBean);
+
+        if (!result.left()) {
+            return result;
+        }
+
+        try {
+            Map<String, String> user = this.indexRepository.User(resetBean.email);
+            int userID = Integer.parseInt(user.get("id"));
+            String password = this.generatePassword();
+
+            if (this.userRepository.changePassword(userID, password)) {
+                return new Pair<>(true, "Successfully reset your password. Here is your password: " + password);
+            }
+
+        } catch (Exception e) {
+            return new Pair<>(false, e.getMessage());
+        }
+
+        return new Pair<>(false, "Something went wrong while trying to reset your password");
+    }
+
+    private String generatePassword() {
+        int passwordLength = 7;
+
+        String chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder password = new StringBuilder();
+
+        for (int i = 0; i < passwordLength; i++) {
+            Random random = new Random();
+            int position = random.nextInt(36);
+            password.append(chars.charAt(position));
+        }
+
+        return password.toString();
     }
 }

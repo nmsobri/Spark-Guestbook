@@ -91,6 +91,15 @@ public class IndexController extends AppController {
     }
 
     public Object ForgotPost(Request req, Response res) throws Exception {
-        return this.render(req, "home/forgot.twig");
+        Pair<Boolean, String> result = this.indexService.forgotPost(req);
+
+        if (!result.left()) {
+            req.session().attribute("flash_error", result.right());
+        } else {
+            req.session().attribute("flash_success", result.right());
+        }
+
+        res.redirect("/forgot");
+        return null;
     }
 }

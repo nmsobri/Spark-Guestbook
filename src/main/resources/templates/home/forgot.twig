@@ -5,10 +5,16 @@
         <form action="/forgot" method="post">
             <h2 class="text-center">Forgot Password</h2>
 
-            {% if error %}
-            <div class="alert alert-danger" role="alert">
-                {{error}}
-            </div>
+            {% if flash_error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ flash_error }}
+                </div>
+            {% endif %}
+
+            {% if flash_success %}
+                <div class="alert alert-success" role="alert">
+                    {{ flash_success }}
+                </div>
             {% endif %}
 
             <div class="form-group">
