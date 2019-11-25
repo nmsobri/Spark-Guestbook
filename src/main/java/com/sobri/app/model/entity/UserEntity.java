@@ -1,7 +1,9 @@
 package com.sobri.app.model.entity;
 
+import com.google.inject.Inject;
 import com.sobri.lib.AppEntity;
 import com.sobri.app.model.bean.RegisterBean;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.ResultSet;
@@ -12,8 +14,10 @@ import java.util.List;
 import java.util.Map;
 
 public class UserEntity extends AppEntity {
-    public String Index() {
-        return "Hello Index Route";
+
+    @Inject
+    public UserEntity(Dotenv dotenv) {
+        super(dotenv);
     }
 
     public List<String> Users() throws Exception {
